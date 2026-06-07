@@ -103,8 +103,8 @@ def gerar_pdf(dados, df_pontos, fotos):
     styles = getSampleStyleSheet()
     doc = SimpleDocTemplate(str(pdf), pagesize=A4, rightMargin=1.5*cm, leftMargin=1.5*cm, topMargin=1.5*cm, bottomMargin=1.5*cm)
     story = []
-logo = BASE_DIR / "logo_vista.png"
-if logo.exists():
+    logo = (BASE_DIR / 'logo_vista.png' if (BASE_DIR / 'logo_vista.png').exists() else ASSETS_DIR / 'logo_vista.png')
+    if logo.exists():
         story.append(Image(str(logo), width=6*cm, height=2.2*cm)); story.append(Spacer(1,10))
     story += [Paragraph('<b>Vista Field Service</b>', styles['Title']), Paragraph('Technical Inspection Platform', styles['Heading2']), Spacer(1,16), Paragraph('<b>Relatório Técnico de Visita</b>', styles['Heading1']), Spacer(1,12)]
     dados_tab = [['Cliente',dados['cliente']],['Máquina / Equipamento',dados['maquina']],['Componente',dados['componente']],['Modelo',dados['modelo']],['Data',dados['data']],['Técnico',dados['tecnico']],['Óleo / especificação',dados['oleo']],['Temperatura do óleo',f"{dados['temperatura']} °C"],['Observações',dados['observacoes'] or 'Sem observações adicionais.']]
@@ -142,7 +142,7 @@ def botao_inicio():
 
 col_logo, col_title = st.columns([1,4])
 with col_logo:
-   logo_file = BASE_DIR / "logo_vista.png"
+    logo = (BASE_DIR / 'logo_vista.png' if (BASE_DIR / 'logo_vista.png').exists() else ASSETS_DIR / 'logo_vista.png')
     if logo.exists(): st.image(str(logo), width=170)
 with col_title:
     st.title('Vista Field Service'); st.subheader('Technical Inspection Platform')
